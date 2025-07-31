@@ -2,3 +2,4 @@ streamlit
 pandas
 xlsxwriter
 streamlit-sortable
+pip install streamlit pandas xlsxwriter streamlit-aggrid
