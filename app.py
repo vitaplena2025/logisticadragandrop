@@ -1,3 +1,4 @@
+import io
 import streamlit as st
 import pandas as pd
 from io import BytesIO
@@ -12,7 +13,15 @@ if not master_up:
     st.stop()
 
 # Leemos el maestro
-df_master = pd.read_excel(master_up)
+import io
+
+# master_up es un UploadedFile de Streamlit
+master_bytes = master_up.read()              # lee todo el contenido
+master_io = io.BytesIO(master_bytes)         # envuélvelo en un BytesIO
+df_master = pd.read_excel(master_io, 
+                          engine="openpyxl", 
+                          sheet_name=0)      # o el nombre/índice de hoja que necesites
+
 # Ajusta este nombre si tu columna ID es distinta
 ID_COL = st.selectbox("Columna identificadora de facturas", df_master.columns, index=0)
 items = df_master[ID_COL].astype(str).tolist()
